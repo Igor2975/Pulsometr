@@ -51,4 +51,48 @@ $(document).ready(function () {
     })
   })
 
+  // ввод телефона
+
+  $('input[name=phone]').mask("+7(999)-999-99-99")
+
+  // //Валидация
+  // $('#consult-form').validate();
+  // $('#order form').validate({
+  //   rules: {
+  //     // simple rule, converted to {required:true}
+  //     name: "required",
+  //     phone:"required",
+  //     // compound rule
+  //     email: {
+  //       required: true,
+  //       email: true
+  //     }
+  //   },
+  //   messages: {
+  //     name: "Введите свое имя",
+  //     phone:"Введите свой номер телефона",
+  //     email: {
+  //       required: "ВВедите свою почту",
+  //       email: "Неправильный адрес почты"
+  //     }
+  // }
+  // });
+  // $("#consultation").validate({
+  //   rules: {
+  //     name: "required",
+  //     email: {
+  //       required: true,
+  //       email: true
+  //     }
+  //   },
+  //   messages: {
+  //     name: "Please specify your name",
+  //     email: {
+  //       required: "We need your email address to contact you",
+  //       email: "Your email address must be in the format of name@domain.com"
+  //     }
+  //   }
+  // });
+ 
+
 });
