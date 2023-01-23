@@ -49,50 +49,60 @@ $(document).ready(function () {
       $('#order .modal__subtitle').text($('.catalog-item__sub').eq(i).text());
       $('.overlay , #order').fadeIn('slow');
     })
-  })
+  });
 
   // ввод телефона
 
-  $('input[name=phone]').mask("+7(999)-999-99-99")
+  $('input[name=phone]').mask("+7(999)-999-99-99");
 
   // //Валидация
-  // $('#consult-form').validate();
-  // $('#order form').validate({
-  //   rules: {
-  //     // simple rule, converted to {required:true}
-  //     name: "required",
-  //     phone:"required",
-  //     // compound rule
-  //     email: {
-  //       required: true,
-  //       email: true
-  //     }
-  //   },
-  //   messages: {
-  //     name: "Введите свое имя",
-  //     phone:"Введите свой номер телефона",
-  //     email: {
-  //       required: "ВВедите свою почту",
-  //       email: "Неправильный адрес почты"
-  //     }
-  // }
-  // });
-  // $("#consultation").validate({
-  //   rules: {
-  //     name: "required",
-  //     email: {
-  //       required: true,
-  //       email: true
-  //     }
-  //   },
-  //   messages: {
-  //     name: "Please specify your name",
-  //     email: {
-  //       required: "We need your email address to contact you",
-  //       email: "Your email address must be in the format of name@domain.com"
-  //     }
-  //   }
-  // });
+  function validateForms (form) {
+    $(form).validate({
+      rules: {
+        name: "required",
+        phone: "required",
+        email: {
+          required: true,
+          email: true
+        }
+      },
+      messages: {
+        name: "Пожалуйста, введите ваше имя",
+        phone: "Пожалуйста, введите ваш номер телефона",
+        email: {
+          required: "Пожалуйста, введите адрес почтового ящика",
+          email: "Адрес почтового ящика введен неверно"
+        }
+      }
+    });
+  };
+
+  validateForms('#order form');
+  validateForms('#consultation-form');
+  validateForms('#consultation form');
+
+  //Отправка писем
+  $('form').submit(function (e) {
+    e.preventDefault();
+
+    if (!$(this).valid()) {
+      return;
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "../mailer/smart.php",
+      data: $(this).serialize()
+    }).done(function () {
+      $(this).find("input").val("");
+
+      $('#consultation, #order').fadeOut();
+      $('.overlay, #thanks').fadeIn();
+
+      $('form').trigger('reset');
+    });
+    return false;
+  });
  
 
 });
